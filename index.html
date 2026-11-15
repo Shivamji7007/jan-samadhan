@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jan-Samadhan India | Pan-India Civic Auto-Escalation Engine</title>
+  <meta name="description" content="Free Pan-India Civic Grievance, Municipal Routing & RTI Section 6(1) Generator in English & Hindi.">
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #111827;
+      --surface-2: #1e293b;
+      --border: #2d3748;
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --accent: #38bdf8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 18px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    
+    .header { text-align: center; max-width: 850px; margin-bottom: 20px; }
+    .badge { display: inline-block; background: rgba(249, 115, 22, 0.15); color: var(--primary); border: 1px solid rgba(249, 115, 22, 0.4); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; margin-bottom: 8px; text-transform: uppercase; }
+    .header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .header p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .container { width: 100%; max-width: 1000px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; }
+    @media (max-width: 840px) { .container { grid-template-columns: 1fr; } }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.45); }
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; gap: 8px; }
+
+    .form-group { margin-bottom: 13px; }
+    label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    select, input, textarea { width: 100%; background: #070b14; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 14px; outline: none; transition: 0.2s; }
+    select:focus, input:focus, textarea:focus { border-color: var(--primary); }
+    textarea { resize: vertical; min-height: 72px; line-height: 1.4; }
+
+    .btn-gps { background: var(--surface-2); border: 1px solid var(--accent); color: var(--accent); padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    .btn-gps:hover { background: rgba(56, 189, 248, 0.15); }
+
+    .lang-toggle { display: flex; background: #070b14; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .lang-btn { background: transparent; border: none; color: var(--muted); padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; }
+    .lang-btn.active { background: var(--primary); color: #fff; }
+
+    .btn-primary { width: 100%; background: var(--primary); color: #fff; font-weight: 700; border: none; padding: 12px; border-radius: 8px; font-size: 14.5px; cursor: pointer; transition: 0.2s; margin-top: 4px; }
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .route-box { background: #070b14; border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px; }
+    .route-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .route-item { background: var(--surface-2); padding: 9px; border-radius: 8px; }
+    .route-item span { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+    .route-item strong { font-size: 12.5px; color: var(--accent); margin-top: 2px; display: block; }
+
+    .output-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+    .tab-btn { flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .tab-btn.active { background: rgba(56, 189, 248, 0.15); border-color: var(--accent); color: var(--accent); }
+
+    .draft-wrapper { position: relative; }
+    .draft-area { background: #070b14; border: 1px solid var(--border); border-radius: 8px; padding: 13px; font-size: 13px; line-height: 1.55; color: #e2e8f0; white-space: pre-wrap; max-height: 265px; overflow-y: auto; }
+    .char-counter { text-align: right; font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .action-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+    @media (max-width: 600px) { .action-row { grid-template-columns: 1fr 1fr; } }
+    .btn-sec { background: var(--surface-2); color: #fff; border: 1px solid var(--border); padding: 9px 6px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .btn-sec:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-x { border-color: #38bdf8; color: #38bdf8; }
+    .btn-portal { border-color: #f97316; color: #f97316; }
+    .btn-wa { border-color: #22c55e; color: #22c55e; }
+
+    .sla-tag { display: inline-block; background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .footer { margin-top: 24px; text-align: center; font-size: 12px; color: var(--muted); }
+
+    /* CLEAN WHITE PAPER PRINT STYLES */
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .header, .card:first-child, .route-box, .output-tabs, .action-row, .char-counter, .footer, .card-title { display: none !important; }
+      .container { display: block; max-width: 100%; }
+      .card { border: none; box-shadow: none; padding: 0; background: #fff; }
+      .draft-area { background: #fff; color: #000; border: none; max-height: none; overflow: visible; font-size: 14px; line-height: 1.6; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">&#127470;&#127475; Pan-India Public Civic Infrastructure</div>
+    <h1>Jan-Samadhan Engine</h1>
+    <p>Built for every Indian citizen. Generate State-routed Grievance Letters (English &amp; हिंदी), RTI Section 6(1) Notices &amp; Direct X Escalations.</p>
+  </div>
+
+  <div class="container">
+    <!-- LEFT: INPUT -->
+    <div class="card">
+      <div class="card-title">
+        <span>1. Location &amp; Civic Issue</span>
+        <button class="btn-gps" onclick="detectLocation()" id="gpsBtn">&#128205; Auto-Detect GPS</button>
+      </div>
+
+      <div class="form-group">
+        <label>State / Union Territory</label>
+        <select id="stateInput" onchange="generateEscalation()">
+          <option value="DELHI" selected>Delhi (NCT)</option>
+          <option value="UP">Uttar Pradesh (उत्तर प्रदेश)</option>
+          <option value="MAHARASHTRA">Maharashtra (महाराष्ट्र)</option>
+          <option value="KARNATAKA">Karnataka</option>
+          <option value="TAMILNADU">Tamil Nadu</option>
+          <option value="GUJARAT">Gujarat</option>
+          <option value="RAJASTHAN">Rajasthan (राजस्थान)</option>
+          <option value="BIHAR">Bihar (बिहार)</option>
+          <option value="MP">Madhya Pradesh (मध्य प्रदेश)</option>
+          <option value="WESTBENGAL">West Bengal</option>
+          <option value="TELANGANA">Telangana</option>
+          <option value="HARYANA">Haryana (हरियाणा)</option>
+          <option value="PUNJAB">Punjab</option>
+          <option value="ODISHA">Odisha</option>
+          <option value="KERALA">Kerala</option>
+          <option value="JHARKHAND">Jharkhand (झारखंड)</option>
+          <option value="CHHATTISGARH">Chhattisgarh (छत्तीसगढ़)</option>
+          <option value="UTTARAKHAND">Uttarakhand (उत्तराखंड)</option>
+          <option value="ASSAM">Assam</option>
+          <option value="OTHER">Other Indian State / UT (CPGRAMS)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>City, Ward &amp; Exact Landmark</label>
+        <input type="text" id="localityInput" oninput="generateEscalation()" value="Saket, Block J, New Delhi" placeholder="e.g., Gomti Nagar Sec-4, Lucknow">
+      </div>
+
+      <div class="form-group">
+        <label>Issue Category</label>
+        <select id="issueInput" onchange="generateEscalation()">
+          <option value="POTHOLE" selected>Broken Road / Deep Potholes / Cave-in</option>
+          <option value="GARBAGE">Uncollected Garbage / Open Dumping</option>
+          <option value="WATERLOG">Sewer Overflow / Waterlogging / Drain Blockage</option>
+          <option value="STREETLIGHT">Non-Functional Streetlights (Dark Spot Safety)</option>
+          <option value="WATER">Contaminated / No Drinking Water Supply</option>
+          <option value="ENCROACHMENT">Illegal Footpath / Road Encroachment</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Pending Duration</label>
+        <select id="durationInput" onchange="generateEscalation()">
+          <option value="48 hours">More than 48 Hours</option>
+          <option value="7 days" selected>More than 7 Days (SLA Breached)</option>
+          <option value="30 days">Over 1 Month (Chronic Neglect)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ground Reality / Hazard Details</label>
+        <textarea id="detailsInput" oninput="generateEscalation()" placeholder="Describe accident risk, school/hospital nearby, or prior complaint ID...">Deep water-filled potholes on main approach road causing daily two-wheeler skids and traffic congestion.</textarea>
+      </div>
+
+      <button class="btn-primary" onclick="generateEscalation()">Refresh Escalation Package &#9889;</button>
+    </div>
+
+    <!-- RIGHT: OUTPUT -->
+    <div class="card">
+      <div class="card-title">
+        <span>2. Official Routing &amp; Legal Drafts</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="lang-toggle">
+            <button class="lang-btn active" id="langEn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" id="langHi" onclick="setLang('hi')">हिंदी</button>
+          </div>
+          <span class="sla-tag" id="slaBadge">SLA: 72h</span>
+        </div>
+      </div>
+
+      <div class="route-box">
+        <div class="route-grid">
+          <div class="route-item">
+            <span>State Grievance Portal</span>
+            <strong id="portalName">PGMS Delhi / MCD 311</strong>
+          </div>
+          <div class="route-item">
+            <span>Helpline / Central Backup</span>
+            <strong id="helplineInfo">155305 / 1076</strong>
+          </div>
+          <div class="route-item">
+            <span>Official X Handles</span>
+            <strong id="xHandles">@MCD_Delhi @LtGovDelhi</strong>
+          </div>
+          <div class="route-item">
+            <span>Statutory Escalation</span>
+            <strong>RTI Act Sec 6(1) + CPGRAMS</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="output-tabs">
+        <button class="tab-btn active" id="tabFormal" onclick="switchTab('formal')">Formal Letter</button>
+        <button class="tab-btn" id="tabSocial" onclick="switchTab('social')">X (Twitter) Post</button>
+        <button class="tab-btn" id="tabRti" onclick="switchTab('rti')">RTI Notice</button>
+      </div>
+
+      <div class="draft-wrapper">
+        <div class="draft-area" id="outputText"></div>
+        <div class="char-counter" id="charCounter"></div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-sec" id="copyBtn" onclick="copyDraft()">&#128203; Copy</button>
+        <a class="btn-sec btn-portal" id="portalLink" href="#" target="_blank">&#127760; Open Portal</a>
+        <a class="btn-sec btn-x" id="tweetLink" href="#" target="_blank">&#128640; Post on X</a>
+        <button class="btn-sec btn-wa" onclick="window.print()">&#128424; Print / PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Open Public Utility for India &bull; Zero Login Required &bull; Built for Citizen Accountability
+  </div>
+
+  <script>
+    const stateMatrix = {
+      DELHI: { name: "Delhi", nameHi: "दिल्ली", portal: "PGMS Delhi / MCD 311", url: "https://pgms.delhi.gov.in/", helpline: "155305 / 1076", handles: "@MCD_Delhi @CMODelhi @LtGovDelhi" },
+      UP: { name: "Uttar Pradesh", nameHi: "उत्तर प्रदेश", portal: "Jansunwai IGRS UP", url: "https://jansunwai.up.nic.in/", helpline: "1076 / 1533", handles: "@CMOfficeUP @UPGovt" },
+      MAHARASHTRA: { name: "Maharashtra", nameHi: "महाराष्ट्र", portal: "Aaple Sarkar Grievance", url: "https://grievances.maharashtra.gov.in/", helpline: "1916 / 1800-120-8040", handles: "@CMOMaharashtra @mybmc" },
+      KARNATAKA: { name: "Karnataka", nameHi: "कर्नाटक", portal: "Janaspandana / Sahaaya", url: "https://janaspandana.karnataka.gov.in/", helpline: "1533 / 1902", handles: "@CMofKarnataka @BBMPCOMM" },
+      TAMILNADU: { name: "Tamil Nadu", nameHi: "तमिलनाडु", portal: "Mudhalvarin Mugavari", url: "https://cmhelpline.tnega.org/", helpline: "1100 / 1913", handles: "@CMOTamilNadu @chennaicorp" },
+      GUJARAT: { name: "Gujarat", nameHi: "गुजरात", portal: "SWAGAT Online Gujarat", url: "https://swagat.gujarat.gov.in/", helpline: "155303", handles: "@CMOGuj @AmdavadAMC" },
+      RAJASTHAN: { name: "Rajasthan", nameHi: "राजस्थान", portal: "Rajasthan Sampark", url: "https://sampark.rajasthan.gov.in/", helpline: "181", handles: "@RajCMO" },
+      BIHAR: { name: "Bihar", nameHi: "बिहार", portal: "Bihar Lok Shikayat Nivaran", url: "https://lokshikayat.bihar.gov.in/", helpline: "1800-345-6284", handles: "@IPRD_Bihar" },
+      MP: { name: "Madhya Pradesh", nameHi: "मध्य प्रदेश", portal: "CM Helpline MP", url: "https://cmhelpline.mp.gov.in/", helpline: "181", handles: "@CMMadhyaPradesh" },
+      WESTBENGAL: { name: "West Bengal", nameHi: "पश्चिम बंगाल", portal: "KMC / West Bengal Grievance", url: "https://www.kmcgov.in/", helpline: "155360", handles: "@kmc_kolkata" },
+      TELANGANA: { name: "Telangana", nameHi: "तेलंगाना", portal: "Prajavani / GHMC Grievance", url: "https://igs.ghmc.gov.in/", helpline: "040-21111111", handles: "@GHMCOnline" },
+      HARYANA: { name: "Haryana", nameHi: "हरियाणा", portal: "CM Window Haryana", url: "https://cmharyanacell.nic.in/", helpline: "1100", handles: "@cmohry" },
+      PUNJAB: { name: "Punjab", nameHi: "पंजाब", portal: "PGRMS Punjab", url: "https://connect.punjab.gov.in/", helpline: "1100", handles: "@CMOPb" },
+      ODISHA: { name: "Odisha", nameHi: "ओडिशा", portal: "Jana Sunani Odisha", url: "https://janasunani.odisha.gov.in/", helpline: "155335", handles: "@CMO_Odisha" },
+      KERALA: { name: "Kerala", nameHi: "केरल", portal: "CMDRF / Kerala Grievance", url: "https://cmo.kerala.gov.in/", helpline: "1076", handles: "@CMOKerala" },
+      JHARKHAND: { name: "Jharkhand", nameHi: "झारखंड", portal: "Jharkhand Mukhyamantri Jansamvad", url: "https://jansamvad.jharkhand.gov.in/", helpline: "181", handles: "@JharkhandCMO" },
+      CHHATTISGARH: { name: "Chhattisgarh", nameHi: "छत्तीसगढ़", portal: "Janshikayat Chhattisgarh", url: "https://janshikayat.cg.nic.in/", helpline: "1100", handles: "@ChhattisgarhCMO" },
+      UTTARAKHAND: { name: "Uttarakhand", nameHi: "उत्तराखंड", portal: "CM Helpline Uttarakhand", url: "https://cmhelpline.uk.gov.in/", helpline: "1905", handles: "@UKCMO" },
+      ASSAM: { name: "Assam", nameHi: "असम", portal: "Assam Public Grievance Portal", url: "https://pgportal.gov.in/", helpline: "1800-345-3574", handles: "@CMOfficeAssam" },
+      OTHER: { name: "India", nameHi: "भारत", portal: "CPGRAMS Central Portal", url: "https://pgportal.gov.in/", helpline: "1969 (Swachhata)", handles: "@MoHUA_India @CPGRAMS" }
+    };
+
+    const issueData = {
+      POTHOLE: {
+        title: "Severe Road Damage & Deep Potholes",
+        titleHi: "जर्जर सड़क एवं गहरे जानलेवा गड्ढे",
+        dept: "Municipal Engineering / State PWD Road Maintenance Wing",
+        deptHi: "अधिशासी अभियंता (निर्माण/सड़क अनुरक्षण विभाग), नगर निगम / लोक निर्माण विभाग",
+        sla: "72 Hours"
+      },
+      GARBAGE: {
+        title: "Uncollected Garbage Dump & Sanitation Hazard",
+        titleHi: "कचरे का अंबार एवं गंभीर स्वच्छता संकट",
+        dept: "Municipal Solid Waste Management & Health Officer",
+        deptHi: "नगर स्वास्थ्य अधिकारी (ठोस अपशिष्ट प्रबंधन विभाग), नगर निगम",
+        sla: "24 Hours"
+      },
+      WATERLOG: {
+        title: "Sewer Overflow & Stagnant Waterlogging",
+        titleHi: "सीवर ओवरफ्लो एवं जलभराव की समस्या",
+        dept: "Municipal Drainage & Water Supply Board",
+        deptHi: "महाप्रबंधक / अधिशासी अभियंता (जलकल एवं सीवरेज विभाग)",
+        sla: "24 Hours"
+      },
+      STREETLIGHT: {
+        title: "Non-Functional Streetlights (Dark Spot Hazard)",
+        titleHi: "खराब स्ट्रीट लाइटें एवं अंधेरे से सुरक्षा खतरा",
+        dept: "Municipal Electrical & Streetlight Division",
+        deptHi: "अधिशासी अभियंता (विद्युत एवं प्रकाश व्यवस्था विभाग), नगर निगम",
+        sla: "48 Hours"
+      },
+      WATER: {
+        title: "Contaminated / Disrupted Drinking Water Supply",
+        titleHi: "दूषित पेयजल आपूर्ति / जलापूर्ति बाधित होना",
+        dept: "Jal Sansthan / Municipal Water Works Dept",
+        deptHi: "अधिशासी अभियंता (जल संस्थान / पेयजल आपूर्ति विभाग)",
+        sla: "24 Hours"
+      },
+      ENCROACHMENT: {
+        title: "Illegal Footpath & Public Road Encroachment",
+        titleHi: "सार्वजनिक सड़क एवं फुटपाथ पर अवैध अतिक्रमण",
+        dept: "Municipal Enforcement Squad & Local Traffic Police",
+        deptHi: "प्रभारी अधिकारी (अतिक्रमण निरोधक दस्ता), नगर निगम",
+        sla: "7 Days"
+      }
+    };
+
+    let currentTab = 'formal';
+    let currentLang = 'en';
+    let generatedData = { formal: '', social: '', rti: '' };
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('langEn').className = 'lang-btn' + (lang === 'en' ? ' active' : '');
+      document.getElementById('langHi').className = 'lang-btn' + (lang === 'hi' ? ' active' : '');
+      generateEscalation();
+    }
+
+    function detectLocation() {
+      const btn = document.getElementById('gpsBtn');
+      if (!navigator.geolocation) {
+        btn.innerText = "GPS Unsupported";
+        return;
+      }
+      btn.innerText = "Locating...";
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+          const data = await res.json();
+          const addr = data.address || {};
+          const area = addr.suburb || addr.neighbourhood || addr.road || "";
+          const city = addr.city || addr.town || addr.state_district || "";
+          const state = addr.state || "";
+          document.getElementById('localityInput').value = [area, city, state].filter(Boolean).join(", ");
+          
+          const sLower = state.toLowerCase();
+          const stateMapMatch = {
+            delhi: "DELHI", "uttar pradesh": "UP", maharashtra: "MAHARASHTRA", karnataka: "KARNATAKA",
+            tamil: "TAMILNADU", gujarat: "GUJARAT", rajasthan: "RAJASTHAN", bihar: "BIHAR",
+            madhya: "MP", bengal: "WESTBENGAL", telangana: "TELANGANA", haryana: "HARYANA",
+            punjab: "PUNJAB", odisha: "ODISHA", kerala: "KERALA", jharkhand: "JHARKHAND",
+            chhattisgarh: "CHHATTISGARH", uttarakhand: "UTTARAKHAND", assam: "ASSAM"
+          };
+          for (let key in stateMapMatch) {
+            if (sLower.includes(key)) {
+              document.getElementById('stateInput').value = stateMapMatch[key];
+              break;
+            }
+          }
+          generateEscalation();
+          btn.innerText = "Location Set";
+        } catch (e) {
+          btn.innerText = "Network Error";
+        }
+      }, () => {
+        btn.innerText = "GPS Blocked";
+        setTimeout(() => { btn.innerText = "Auto-Detect GPS"; }, 2500);
+      });
+    }
+
+    function generateEscalation() {
+      const stKey = document.getElementById('stateInput').value;
+      const locality = document.getElementById('localityInput').value.trim() || "Local Ward";
+      const issKey = document.getElementById('issueInput').value;
+      const duration = document.getElementById('durationInput').value;
+      const details = document.getElementById('detailsInput').value.trim();
+
+      const st = stateMatrix[stKey];
+      const iss = issueData[issKey];
+      const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      document.getElementById('portalName').innerText = st.portal;
+      document.getElementById('helplineInfo').innerText = st.helpline;
+      document.getElementById('xHandles').innerText = st.handles;
+      document.getElementById('slaBadge').innerText = `SLA: ${iss.sla}`;
+      document.getElementById('portalLink').href = st.url;
+
+      if (currentLang === 'en') {
+        generatedData.formal = 
+`Date: ${today}
+To,
+The Nodal Officer / Executive Engineer,
+${iss.dept},
+${locality} (${st.name})
+
+Subject: URGENT CIVIC GRIEVANCE — ${iss.title} at ${locality} (Pending > ${duration})
+
+Respected Sir/Madam,
+
+This is to formally bring to your immediate notice an unresolved civic infrastructure hazard at ${locality} falling under your administrative jurisdiction.
+
+1. Issue Category: ${iss.title}
+2. Exact Location: ${locality}
+3. Pending Since: Over ${duration}
+4. Ground Impact: ${details || "Causing severe public inconvenience, traffic hazard, and safety risk to daily commuters."}
+
+As per the applicable Municipal Citizen Charter, the mandatory resolution timeline for this grievance is ${iss.sla}. This statutory SLA has been breached.
+
+Kindly register this grievance on ${st.portal} (Helpline: ${st.helpline}), assign field staff immediately, and provide an Action Taken Report (ATR). Failing resolution within 72 hours, this matter will be escalated to the Appellate Authority and followed up via an RTI application under Section 6(1) of the RTI Act, 2005.
+
+Sincerely,
+A Concerned Citizen of India
+Location: ${locality}`;
+
+        generatedData.rti = 
+`APPLICATION UNDER SECTION 6(1) OF THE RIGHT TO INFORMATION ACT, 2005
+
+To,
+The Public Information Officer (PIO),
+${iss.dept},
+${locality} (${st.name})
+
+Subject: Certified information regarding maintenance records, contractor liability & action taken on ${iss.title} at ${locality}.
+
+Sir/Madam,
+Please furnish certified copies of the following information within 30 days under Section 7(1) of the RTI Act, 2005:
+
+1. Name and designation of the Junior Engineer (JE) and Assistant Engineer (AE) responsible for routine maintenance of ${locality}.
+2. Name of the contractor/agency awarded the maintenance contract for this stretch, along with Defect Liability Period (DLP) terms.
+3. Certified copy of daily inspection logs and Action Taken Reports (ATR) regarding ${iss.title} over the last ${duration}.
+4. Copy of the Citizen Charter norms specifying the mandatory resolution SLA for this category.
+
+Prescribed RTI fee of Rs. 10/- is enclosed.
+
+Applicant: Concerned Citizen
+Date: ${today}`;
+      } else {
+        // HINDI ADMINISTRATIVE DRAFTS
+        generatedData.formal = 
+`दिनांक: ${today}
+सेवा में,
+नोडल अधिकारी / अधिशासी अभियंता,
+${iss.deptHi},
+${locality} (${st.nameHi})
+
+विषय: तत्काल जन-शिकायत — ${locality} में ${iss.titleHi} के निस्तारण हेतु (लंबित अवधि: ${duration} से अधिक)
+
+महोदय/महोदया,
+
+सविनय निवेदन है कि आपके प्रशासनिक क्षेत्राधिकार के अंतर्गत ${locality} में गंभीर नागरिक बुनियादी ढांचे की समस्या उत्पन्न हो गई है, जिससे आम नागरिकों को भारी कठिनाई और दुर्घटना का खतरा बना हुआ है।
+
+1. समस्या का प्रकार: ${iss.titleHi}
+2. सटीक स्थान: ${locality}
+3. लंबित अवधि: ${duration} से अधिक
+4. जमीनी स्थिति: ${details || "दैनिक यात्रियों, बुजुर्गों और स्कूली बच्चों के लिए गंभीर सुरक्षा संकट एवं आवागमन में बाधा।"}
+
+सिटीजन चार्टर (Citizen Charter) के अनुसार इस श्रेणी की शिकायत के निस्तारण की अनिवार्य समय-सीमा ${iss.sla} निर्धारित है, जिसका उल्लंघन हो चुका है।
+
+अतः आपसे अनुरोध है कि इस शिकायत को ${st.portal} (हेल्पलाइन: ${st.helpline}) पर पंजीकृत कर 72 घंटे के भीतर स्थायी समाधान सुनिश्चित करें। निस्तारण न होने की स्थिति में उच्चाधिकारियों को अपील एवं सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत संबंधित अभियंता व ठेकेदार की जवाबदेही तय करने हेतु आवेदन किया जाएगा।
+
+भवदीय,
+एक जागरूक नागरिक
+स्थान: ${locality}`;
+
+        generatedData.rti = 
+`सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत आवेदन पत्र
+
+सेवा में,
+जन सूचना अधिकारी (PIO),
+${iss.deptHi},
+${locality} (${st.nameHi})
+
+विषय: ${locality} में ${iss.titleHi} के रखरखाव, ठेकेदार की जवाबदेही एवं की गई कार्यवाही की प्रमाणित सूचना के संबंध में।
+
+महोदय/महोदया,
+सूचना का अधिकार अधिनियम, 2005 की धारा 7(1) के तहत 30 दिनों के भीतर निम्नलिखित बिंदुओं की प्रमाणित प्रतियां उपलब्ध कराने का कष्ट करें:
+
+1. ${locality} के नियमित निरीक्षण एवं रखरखाव हेतु उत्तरदायी अवर अभियंता (JE) एवं सहायक अभियंता (AE) का नाम व पदनाम।
+2. इस क्षेत्र के रखरखाव हेतु नियुक्त ठेकेदार/एजेंसी का नाम एवं अनुबंध की दोष दायित्व अवधि (Defect Liability Period) की शर्तें।
+3. पिछले ${duration} के दौरान ${iss.titleHi} से संबंधित निरीक्षण लॉग एवं की गई कार्यवाही (ATR) की प्रमाणित प्रति।
+4. सिटीजन चार्टर के अनुसार इस समस्या के समाधान की निर्धारित समय-सीमा की प्रति।
+
+निर्धारित आरटीआई शुल्क ₹10/- संलग्न है।
+
+आवेदक: जागरूक नागरिक
+दिनांक: ${today}`;
+      }
+
+      // STRICT 275-CHAR SAFE TWEET BUILDER
+      const shortLoc = locality.length > 45 ? locality.substring(0, 42) + "..." : locality;
+      const shortDetail = details.length > 75 ? details.substring(0, 72) + "..." : details;
+      let tweetDraft = `CIVIC ALERT in ${shortLoc}: ${iss.title} pending >${duration}! ${shortDetail} Citizen Charter SLA (${iss.sla}) breached. Requesting urgent action from ${st.handles} @CPGRAMS #JanSamadhan`;
+      if (tweetDraft.length > 278) {
+        tweetDraft = tweetDraft.substring(0, 275) + "...";
+      }
+      generatedData.social = tweetDraft;
+
+      document.getElementById('tweetLink').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(generatedData.social)}`;
+      renderTab();
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('tabFormal').className = 'tab-btn' + (tab === 'formal' ? ' active' : '');
+      document.getElementById('tabSocial').className = 'tab-btn' + (tab === 'social' ? ' active' : '');
+      document.getElementById('tabRti').className = 'tab-btn' + (tab === 'rti' ? ' active' : '');
+      renderTab();
+    }
+
+    function renderTab() {
+      const txt = generatedData[currentTab];
+      document.getElementById('outputText').innerText = txt;
+      const counter = document.getElementById('charCounter');
+      if (currentTab === 'social') {
+        counter.innerText = `X Character Limit: ${txt.length} / 280 (Safe)`;
+        counter.style.color = txt.length <= 280 ? "var(--success)" : "var(--danger)";
+      } else {
+        counter.innerText = `Words: ${txt.split(/\s+/).length} | Ready for Official Submission & Print`;
+        counter.style.color = "var(--muted)";
+      }
+    }
+
+    function copyDraft() {
+      navigator.clipboard.writeText(generatedData[currentTab]);
+      const btn = document.getElementById('copyBtn');
+      btn.innerHTML = "&#9989; Copied!";
+      setTimeout(() => { btn.innerHTML = "&#128203; Copy"; }, 2000);
+    }
+
+    window.onload = generateEscalation;
+  </script>
+</body>
+</html>
